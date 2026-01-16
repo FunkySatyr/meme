@@ -404,7 +404,6 @@
         init() {
             this.setupMobileMenu();
             this.setupCopyButton();
-            this.setupFAQ();
             this.setupSmoothScroll();
         }
 
@@ -460,30 +459,6 @@
             }
         }
 
-        setupFAQ() {
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                
-                question.addEventListener('click', () => {
-                    const isActive = item.classList.contains('active');
-                    
-                    // Close all other items
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            otherItem.classList.remove('active');
-                            otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-                        }
-                    });
-                    
-                    // Toggle current item
-                    item.classList.toggle('active');
-                    question.setAttribute('aria-expanded', !isActive);
-                });
-            });
-        }
-
         setupSmoothScroll() {
             const links = document.querySelectorAll('a[href^="#"]');
             
@@ -526,9 +501,9 @@
         new UI();
         
         // Log welcome message
-        console.log('%c🚀 MeMe Token', 'font-size: 24px; font-weight: bold; color: #c49a6c;');
-        console.log('%cThe Meme You Ape, The Risk You Understand.', 'font-size: 14px; color: #888;');
-        console.log('%c⚠️ This is a memecoin. DYOR. NFA.', 'font-size: 12px; color: #fbbf24;');
+        console.log('%c🚀 MeMe Token', 'font-size: 24px; font-weight: bold; color: #ff6ad5;');
+        console.log('%cThe Meme You Ape, The Fortune You Deserve.', 'font-size: 14px; color: #7bfffa;');
+        console.log('%c⚠️ This is a memecoin. DYOR. NFA.', 'font-size: 12px; color: #ffd66b;');
     });
 
 })();
