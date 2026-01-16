@@ -378,6 +378,7 @@
                     opacity: 0.3
                 });
                 
+                // Contract card parallax - position only, NO opacity fade
                 gsap.to(heroCard, {
                     scrollTrigger: {
                         trigger: '.hero',
@@ -385,8 +386,8 @@
                         end: 'bottom top',
                         scrub: 1
                     },
-                    y: 80,
-                    opacity: 0.5
+                    y: 60
+                    // opacity removed - contract widget stays fully visible
                 });
             }
         }
