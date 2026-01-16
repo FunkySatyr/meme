@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeMe | The Meme You Ape</title>
+    <meta name="description" content="MeMe - A self-aware memecoin on Solana. No promises, just memes.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Sticky Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <span class="logo-text">MeMe</span>
+            </a>
+            <nav class="nav">
+                <a href="#how-to-buy" class="nav-link">How to Buy</a>
+                <a href="#stats" class="nav-link">Stats</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </nav>
+            <div class="header-actions">
+                <span class="live-badge">
+                    <span class="live-dot"></span>
+                    LIVE
+                </span>
+                <a href="https://t.me/memecoin" target="_blank" rel="noopener" class="btn btn-primary">
+                    Join Telegram
+                </a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="#how-to-buy" class="nav-link">How to Buy</a>
+            <a href="#stats" class="nav-link">Stats</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+            <a href="https://t.me/memecoin" target="_blank" rel="noopener" class="btn btn-primary">Join Telegram</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <canvas id="webgl-canvas" class="hero-canvas"></canvas>
+        <div class="hero-fallback"></div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title fade-up">
+                    The Meme You Ape,<br>
+                    <span class="accent">The Risk You Understand.</span>
+                </h1>
+                <p class="hero-subtitle fade-up">
+                    A self-aware memecoin on Solana. No promises, no roadmap guarantees, just pure degen energy and community vibes.
+                </p>
+                <p class="hero-disclaimer fade-up">
+                    ⚠️ This is a memecoin. You could lose everything. DYOR.
+                </p>
+                <div class="hero-ctas fade-up">
+                    <a href="https://raydium.io" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                        Buy on DEX
+                    </a>
+                    <a href="#how-to-buy" class="btn btn-secondary btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 16v-4"/>
+                            <path d="M12 8h.01"/>
+                        </svg>
+                        How to Buy
+                    </a>
+                    <a href="https://t.me/memecoin" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                        </svg>
+                        Telegram
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-card fade-up">
+                <div class="contract-card glass-card">
+                    <div class="contract-header">
+                        <span class="contract-label">Contract Address</span>
+                        <span class="network-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                            Solana
+                        </span>
+                    </div>
+                    <div class="contract-address-wrapper">
+                        <code class="contract-address" id="contractAddress">MeMeXXX...XXXXXXX</code>
+                        <button class="copy-btn" id="copyBtn" aria-label="Copy address">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                            </svg>
+                            <span class="copy-text">Copy</span>
+                        </button>
+                    </div>
+                    <a href="https://solscan.io" target="_blank" rel="noopener" class="explorer-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        View on Solscan
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Transparency Section -->
+    <section class="section transparency" id="transparency">
+        <div class="container">
+            <h2 class="section-title fade-up">Radical Transparency</h2>
+            <p class="section-subtitle fade-up">We're honest about what this is. No fake promises.</p>
+            
+            <div class="transparency-grid">
+                <div class="glass-card transparency-card fade-up">
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="15" y1="9" x2="9" y2="15"/>
+                            <line x1="9" y1="9" x2="15" y2="15"/>
+                        </svg>
+                    </div>
+                    <h3>No Utility (For Now)</h3>
+                    <p>This is a memecoin. We don't pretend otherwise. Any future utility will be community-driven.</p>
+                </div>
+                
+                <div class="glass-card transparency-card fade-up">
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3>Fair Launch</h3>
+                    <p>No presale, no insider allocations. Everyone starts equal. Verify on-chain.</p>
+                </div>
+                
+                <div class="glass-card transparency-card fade-up">
+                    <div class="card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <line x1="23" y1="11" x2="17" y2="11"/>
+                        </svg>
+                    </div>
+                    <h3>Anonymous Team</h3>
+                    <p>Yes, the team is anon. Like most memecoins. Judge us by actions, not promises.</p>
+                </div>
+                
+                <div class="glass-card transparency-card fade-up">
+                    <div class="card-icon warning">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <h3>DYOR & Risk Warning</h3>
+                    <p>Memecoins are extremely volatile. Never invest more than you can afford to lose. This is not financial advice.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Buy Section -->
+    <section class="section how-to-buy" id="how-to-buy">
+        <div class="container">
+            <h2 class="section-title fade-up">How to Buy with Phantom</h2>
+            <p class="section-subtitle fade-up">6 simple steps to ape in</p>
+            
+            <div class="steps-grid">
+                <div class="glass-card step-card fade-up">
+                    <span class="step-number">01</span>
+                    <div class="step-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                    </div>
+                    <h3>Install Phantom</h3>
+                    <p>Download Phantom wallet from phantom.app for your browser or mobile.</p>
+                </div>
+                
+                <div class="glass-card step-card fade-up">
+                    <span class="step-number">02</span>
+                    <div class="step-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0110 0v4"/>
+                        </svg>
+                    </div>
+                    <h3>Create Wallet</h3>
+                    <p>Create a new wallet or import existing. Save your seed phrase securely!</p>
+                </div>
+                
+                <div class="glass-card step-card fade-up">
+                    <span class="step-number">03</span>
+                    <div class="step-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/>
+                            <path d="M12 18V6"/>
+                        </svg>
+                    </div>
+                    <h3>Fund with SOL</h3>
+                    <p>Buy SOL on an exchange and send it to your Phantom wallet address.</p>
+                </div>
+                
+                <div class="glass-card step-card fade-up">
+                    <span class="step-number">04</span>
+                    <div class="step-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                        </svg>
+                    </div>
+                    <h3>Copy Contract</h3>
+                    <p>Copy the MeMe contract address from above. Double-check it!</p>
+                </div>
+                
+                <div class="glass-card step-card fade-up">
+                    <span class="step-number">05</span>
+                    <div class="step-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="17 1 21 5 17 9"/>
+                            <path d="M3 11V9a4 4 0 014-4h14"/>
+                            <polyline points="7 23 3 19 7 15"/>
+                            <path d="M21 13v2a4 4 0 01-4 4H3"/>
+                        </svg>
+                    </div>
+                    <h3>Swap on DEX</h3>
+                    <p>Go to Raydium or Jupiter. Paste contract, set slippage, and swap SOL for MeMe.</p>
+                </div>
+                
+                <div class="glass-card step-card fade-up">
+                    <span class="step-number">06</span>
+                    <div class="step-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>View Tokens</h3>
+                    <p>Your MeMe tokens will appear in Phantom. Welcome to the degen club!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section stats" id="stats">
+        <div class="container">
+            <h2 class="section-title fade-up">On-Chain Stats</h2>
+            <p class="section-subtitle fade-up">Real-time data from the blockchain</p>
+            
+            <div class="stats-grid">
+                <div class="glass-card stat-card fade-up">
+                    <span class="stat-label">Price</span>
+                    <span class="stat-value" id="statPrice">$0.00001234</span>
+                    <span class="stat-change positive">+12.5%</span>
+                </div>
+                
+                <div class="glass-card stat-card fade-up">
+                    <span class="stat-label">Market Cap</span>
+                    <span class="stat-value" id="statMcap">$1.2M</span>
+                    <span class="stat-change positive">+8.3%</span>
+                </div>
+                
+                <div class="glass-card stat-card fade-up">
+                    <span class="stat-label">Liquidity</span>
+                    <span class="stat-value" id="statLiquidity">$450K</span>
+                    <span class="stat-change neutral">Locked</span>
+                </div>
+                
+                <div class="glass-card stat-card fade-up">
+                    <span class="stat-label">Holders</span>
+                    <span class="stat-value" id="statHolders">2,847</span>
+                    <span class="stat-change positive">+156</span>
+                </div>
+                
+                <div class="glass-card stat-card fade-up">
+                    <span class="stat-label">24h Volume</span>
+                    <span class="stat-value" id="statVolume">$89.4K</span>
+                    <span class="stat-change negative">-3.2%</span>
+                </div>
+            </div>
+            
+            <div class="stats-actions fade-up">
+                <a href="https://dexscreener.com" target="_blank" rel="noopener" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/>
+                        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                    </svg>
+                    Open Chart
+                </a>
+                <a href="https://solscan.io" target="_blank" rel="noopener" class="btn btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    View Contract
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="section trust" id="trust">
+        <div class="container">
+            <h2 class="section-title fade-up">Trust & Safety Checklist</h2>
+            <p class="section-subtitle fade-up">Verified on-chain. Don't trust, verify.</p>
+            
+            <div class="trust-grid">
+                <div class="glass-card trust-item completed fade-up">
+                    <div class="trust-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <div class="trust-content">
+                        <h4>No Presale</h4>
+                        <p>100% fair launch. No early buyers.</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card trust-item completed fade-up">
+                    <div class="trust-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <div class="trust-content">
+                        <h4>No Team Tokens</h4>
+                        <p>Zero allocation to team wallets.</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card trust-item completed fade-up">
+                    <div class="trust-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <div class="trust-content">
+                        <h4>0% Tax</h4>
+                        <p>No buy/sell tax. What you swap is what you get.</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card trust-item completed fade-up">
+                    <div class="trust-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <div class="trust-content">
+                        <h4>Liquidity Locked</h4>
+                        <p>LP tokens burned. <a href="#" class="inline-link">View proof →</a></p>
+                    </div>
+                </div>
+                
+                <div class="glass-card trust-item completed fade-up">
+                    <div class="trust-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <div class="trust-content">
+                        <h4>Contract Renounced</h4>
+                        <p>Immutable. No owner functions. <a href="#" class="inline-link">Verify →</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="section roadmap" id="roadmap">
+        <div class="container">
+            <h2 class="section-title fade-up">Roadmap <span class="subtitle-tag">(Self-Aware Edition)</span></h2>
+            <p class="section-subtitle fade-up">No promises. Just vibes and honesty.</p>
+            
+            <div class="roadmap-timeline">
+                <div class="roadmap-item fade-up">
+                    <div class="roadmap-marker active"></div>
+                    <div class="glass-card roadmap-card">
+                        <span class="phase-tag">Phase 0</span>
+                        <h3>Launch & Survival</h3>
+                        <ul>
+                            <li>Deploy contract ✓</li>
+                            <li>Add liquidity ✓</li>
+                            <li>Build community</li>
+                            <li>Survive the first 48 hours</li>
+                            <li>Pray to the meme gods</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item fade-up">
+                    <div class="roadmap-marker"></div>
+                    <div class="glass-card roadmap-card">
+                        <span class="phase-tag">Phase 1</span>
+                        <h3>Meme Identity Voting</h3>
+                        <ul>
+                            <li>Community votes on meme direction</li>
+                            <li>Design mascot/identity</li>
+                            <li>Create meme templates</li>
+                            <li>Twitter/X presence</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item fade-up">
+                    <div class="roadmap-marker"></div>
+                    <div class="glass-card roadmap-card">
+                        <span class="phase-tag">Phase 2</span>
+                        <h3>Listings & Visibility</h3>
+                        <ul>
+                            <li>CoinGecko listing</li>
+                            <li>CMC application</li>
+                            <li>DEX aggregator listings</li>
+                            <li>Influencer outreach (organic)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item fade-up">
+                    <div class="roadmap-marker"></div>
+                    <div class="glass-card roadmap-card">
+                        <span class="phase-tag">Phase 3</span>
+                        <h3>TBD by Community</h3>
+                        <ul>
+                            <li>You tell us</li>
+                            <li>Seriously, we're listening</li>
+                            <li>Could be anything</li>
+                            <li>Or nothing. It's a memecoin.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq" id="faq">
+        <div class="container">
+            <h2 class="section-title fade-up">FAQ</h2>
+            <p class="section-subtitle fade-up">The questions you're definitely asking</p>
+            
+            <div class="faq-list">
+                <div class="faq-item glass-card fade-up">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Is this a safe investment?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No. This is a memecoin. There is no such thing as a "safe" memecoin investment. You could lose 100% of your money. Only invest what you can afford to lose completely. This is not financial advice.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item glass-card fade-up">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Is there any utility?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Currently? No. We're not going to pretend there's a revolutionary use case. It's a meme. Any future utility will be decided by the community, if there even is one.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item glass-card fade-up">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Is the team doxxed?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No. And we're not going to pretend that matters for a memecoin. Most memecoin teams are anon. Judge the project by its on-chain actions: liquidity locked, contract renounced, no team tokens.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item glass-card fade-up">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Can you rug?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Contract is renounced. Liquidity is burned. There are no owner functions. Technically, no. But this is crypto—verify everything yourself. Don't trust us. Verify on-chain.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item glass-card fade-up">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Where do updates happen?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Telegram is the main community hub. Follow Twitter/X for announcements. That's it. No Discord drama, no endless channels. Keep it simple.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item glass-card fade-up">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>When moon?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sir, this is a memecoin. Nobody knows. Could go to zero. Could 100x. Probably somewhere in between. That's the game you're playing. Have fun, don't bet the rent money.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">MeMe</span>
+                    <code class="footer-contract">MeMeXXX...XXXXXXX</code>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="https://t.me/memecoin" target="_blank" rel="noopener" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                        </svg>
+                        Join Telegram
+                    </a>
+                    <a href="https://twitter.com/memecoin" target="_blank" rel="noopener" class="footer-social">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-disclaimer">
+                <p>⚠️ <strong>Legal Disclaimer:</strong> This website and the MeMe token are for entertainment purposes only. This is not financial advice. Cryptocurrency investments are highly volatile and risky. You could lose all of your investment. Never invest more than you can afford to lose. Do your own research (DYOR). The team makes no guarantees about the token's value, utility, or future development. By purchasing MeMe tokens, you acknowledge and accept all associated risks.</p>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 MeMe. Not financial advice. DYOR.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
