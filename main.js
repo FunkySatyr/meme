@@ -77,7 +77,7 @@
         }
 
         createShaderMaterial() {
-            // Custom fragment shader with RGB noise, film grain, and dithering
+            // Custom fragment shader with RGB noise, film grain, scanlines, and dithering - Neon Meme Aesthetic
             const vertexShader = `
                 varying vec2 vUv;
                 void main() {
@@ -137,7 +137,7 @@
                     vec2 st = uv * uResolution / min(uResolution.x, uResolution.y);
                     
                     // Slow time for cinematic feel
-                    float time = uTime * 0.15;
+                    float time = uTime * 0.12;
                     
                     // Mouse influence (subtle parallax)
                     vec2 mouseInfluence = (uMouse - 0.5) * 0.1;
@@ -148,28 +148,46 @@
                     float n2 = fbm(st * 3.0 - time * 0.2 + 100.0);
                     float n3 = fbm(st * 1.5 + time * 0.1 + 200.0);
                     
-                    // RGB color channels with subtle separation
-                    float r = n1 * 0.4 + n2 * 0.3;
-                    float g = n2 * 0.35 + n3 * 0.25;
-                    float b = n3 * 0.3 + n1 * 0.2;
+                    // RGB color channels with neon separation
+                    float r = n1 * 0.5 + n2 * 0.3;
+                    float g = n2 * 0.4 + n3 * 0.3;
+                    float b = n3 * 0.5 + n1 * 0.4;
                     
-                    // Coffee/warm accent colors
-                    vec3 color1 = vec3(0.769, 0.604, 0.424); // #c49a6c
-                    vec3 color2 = vec3(0.702, 0.553, 0.396); // #b38d65
-                    vec3 color3 = vec3(0.059, 0.059, 0.059); // #0f0f0f
+                    // Neon Meme palette colors
+                    vec3 colorPink = vec3(1.0, 0.416, 0.835);    // #ff6ad5 neon pink
+                    vec3 colorCyan = vec3(0.482, 1.0, 0.98);     // #7bfffa neon cyan
+                    vec3 colorPurple = vec3(0.541, 0.169, 0.886); // #8a2be2 purple
+                    vec3 colorNavy = vec3(0.02, 0.031, 0.086);   // #050816 deep navy
                     
-                    // Mix colors based on noise
-                    vec3 color = mix(color3, color1, r * 0.3);
-                    color = mix(color, color2, g * 0.2);
+                    // Mix colors based on noise for neon glow effect
+                    vec3 color = colorNavy;
+                    color = mix(color, colorPurple, n1 * 0.25);
+                    color = mix(color, colorPink, r * 0.2);
+                    color = mix(color, colorCyan, b * 0.15);
                     
-                    // Radial gradient (darker at edges)
+                    // Add flowing neon streaks
+                    float streak1 = smoothstep(0.4, 0.6, sin(st.x * 3.0 + time * 2.0 + n1 * 2.0) * 0.5 + 0.5);
+                    float streak2 = smoothstep(0.4, 0.6, sin(st.y * 2.5 - time * 1.5 + n2 * 2.0) * 0.5 + 0.5);
+                    color += colorPink * streak1 * 0.08;
+                    color += colorCyan * streak2 * 0.06;
+                    
+                    // Radial gradient (darker at edges, glow in center)
                     float dist = length(uv - 0.5);
-                    float vignette = 1.0 - smoothstep(0.2, 0.9, dist);
-                    color *= vignette * 0.8 + 0.2;
+                    float vignette = 1.0 - smoothstep(0.2, 0.95, dist);
+                    color *= vignette * 0.85 + 0.15;
+                    
+                    // Add subtle center glow
+                    float centerGlow = 1.0 - smoothstep(0.0, 0.6, dist);
+                    color += colorPink * centerGlow * 0.05;
+                    color += colorCyan * centerGlow * 0.03;
                     
                     // Film grain
-                    float grain = random(uv * uResolution + fract(uTime)) * 0.08;
-                    color += grain - 0.04;
+                    float grain = random(uv * uResolution + fract(uTime)) * 0.06;
+                    color += grain - 0.03;
+                    
+                    // Subtle scanlines
+                    float scanline = sin(uv.y * uResolution.y * 0.5) * 0.02 + 0.98;
+                    color *= scanline;
                     
                     // Dithering
                     float brightness = (color.r + color.g + color.b) / 3.0;
